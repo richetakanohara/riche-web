@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>おすすめ商品 | Boulangerie Riche</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Shippori+Mincho:wght@500;600;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#3d4f3a;
+    --wood:#8a6240;
+    --moss:#6b7a4f;
+    --cream:#f3eee1;
+    --navy:#2d3b52;
+    --card:#fffdf7;
+    --line:#d8c9ab;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Zen Maru Gothic', sans-serif;
+    background:var(--cream);
+    color:#3a3024;
+    line-height:1.85;
+  }
+  img{ display:block; width:100%; height:100%; object-fit:cover; }
+
+  /* header */
+  header{
+    text-align:center;
+    padding:56px 20px 34px;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(138,98,64,0.10), transparent 45%),
+      radial-gradient(circle at 85% 90%, rgba(107,122,79,0.12), transparent 45%);
+    border-bottom:3px solid var(--wood);
+  }
+  header .brand{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:44px;
+    color:var(--navy);
+    letter-spacing:2px;
+  }
+  header .store{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    font-size:26px;
+    color:var(--navy);
+    letter-spacing:4px;
+    margin-top:6px;
+  }
+  header .jp-sub{
+    font-family:'Shippori Mincho', serif;
+    font-size:14px;
+    color:var(--forest);
+    letter-spacing:4px;
+    margin-top:14px;
+  }
+
+  /* section intro */
+  .lead{
+    max-width:640px;
+    margin:0 auto;
+    text-align:center;
+    padding:36px 20px 10px;
+  }
+  .lead h1{
+    font-family:'Shippori Mincho', serif;
+    font-size:24px;
+    color:var(--forest);
+    letter-spacing:2px;
+  }
+
+  main{ max-width:1240px; margin:0 auto; padding:10px 20px 60px; }
+
+  .category{ margin-top:48px; }
+  .category h2{
+    font-family:'Shippori Mincho', serif;
+    font-size:19px;
+    color:#fff;
+    background:var(--forest);
+    display:inline-block;
+    padding:8px 22px;
+    border-radius:2px;
+    letter-spacing:2px;
+    margin-bottom:22px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    gap:26px;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:6px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  .thumb{ aspect-ratio:4/5; background:#e8ddc4; position:relative; flex:none; overflow:hidden; }
+  .thumb img{ position:absolute; inset:0; }
+  .badge{
+    position:absolute; top:10px; left:10px;
+    background:var(--wood); color:#fff;
+    font-size:11px; padding:5px 10px; border-radius:20px;
+    letter-spacing:1px; box-shadow:0 2px 4px rgba(0,0,0,0.2);
+    z-index:2;
+  }
+  .badge.limited{ background:var(--navy); }
+
+  .card-body{ padding:18px 18px 20px; flex:1; display:flex; flex-direction:column; }
+  .card-body h3{
+    font-family:'Shippori Mincho', serif;
+    font-size:25.5px;
+    line-height:1.5;
+    color:var(--navy);
+    margin-bottom:10px;
+  }
+  @media (max-width:640px){ .card-body h3{ font-size:22.5px; } }
+  .price{
+    display:flex; gap:14px; flex-wrap:wrap;
+    font-weight:700; color:var(--wood);
+    font-size:14.5px; margin-bottom:10px;
+  }
+  .price span{ white-space:nowrap; }
+  .desc{ font-size:12.8px; color:#6b5e48; flex:1; }
+  .desc strong{ color:#2d3b52; font-weight:700; background:linear-gradient(transparent 62%, rgba(214,170,90,0.35) 62%); }
+  .desc.placeholder{
+    color:#b3a88e; font-style:italic; min-height:40px;
+  }
+
+  footer{
+    text-align:center;
+    padding:40px 20px;
+    font-family:'Cormorant Garamond', serif;
+    font-size:15px;
+    color:var(--navy);
+    letter-spacing:2px;
+    border-top:3px solid var(--wood);
+  }
+
+  /* スマホ向けの調整 */
+  @media (max-width:640px){
+    header{padding:40px 16px 26px}
+    header .brand{font-size:34px}
+    header .store{font-size:22px}
+    .lead{padding:28px 16px 6px}
+    .lead h1{font-size:16px; letter-spacing:1px; line-height:1.7}
+    main{padding:6px 16px 48px}
+    .category{margin-top:36px}
+    .grid{gap:22px}
+    .card-body{padding:18px 18px 22px}
+    .desc{font-size:13.5px}
+  }
+
+  /* スクロールアニメーション（写真は明るくなりながら落ち着く／文字はせり上がる／説明文は1行ずつ） */
+  .js .card.fade{
+    opacity:0; transform:translateY(34px);
+    transition:opacity 1.6s ease var(--d), transform 1.6s ease var(--d);
+  }
+  .js .card.fade.visible{ opacity:1; transform:none; }
+  .js .card .thumb img{
+    transform:scale(1.25); filter:brightness(.8);
+    transition:transform 3.2s cubic-bezier(.16,1,.3,1) var(--d), filter 3.2s ease var(--d);
+  }
+  .js .card.visible .thumb img{ transform:none; filter:none; }
+
+  .js .mask{ overflow:hidden; }
+  .js .mask.solo{ opacity:1; transform:none; transition:none; }
+  .js .category h2.mask{ display:inline-block; }
+  .js .mask .m{
+    display:block; transform:translateY(115%);
+    transition:transform 1.8s cubic-bezier(.16,1,.3,1);
+  }
+  .js .price.mask .m{ display:flex; gap:14px; flex-wrap:wrap; }
+  .js .solo.visible .m{ transform:none; transition-delay:var(--d); }
+  .js .card.visible .mask .m{ transform:none; }
+  .js .card.visible h3.mask .m{ transition-delay:calc(var(--d) + .7s); }
+  .js .card.visible .price.mask .m{ transition-delay:calc(var(--d) + .92s); }
+
+  /* 説明文：1行ずつ、ふわっと現れる（全体も少しせり上がる） */
+  .js .desc{ opacity:0; }
+  .js .desc.lined{
+    opacity:1; transform:translateY(16px);
+    transition:transform 1.8s cubic-bezier(.16,1,.3,1);
+  }
+  .js .card.visible .desc.lined{ transform:none; transition-delay:calc(var(--d) + 1.0s); }
+  .js .desc .c{ opacity:0; transition:opacity 1.5s ease; }
+  .js .card.visible .desc .c{ opacity:1; transition-delay:calc(var(--d) + 1.14s + var(--i) * .22s); }
+  .js .desc.lined strong{ background:none; }
+  .js .desc.lined strong .c{ background:linear-gradient(transparent 62%, rgba(214,170,90,0.35) 62%); }
+
+  @media (prefers-reduced-motion:reduce){
+    .js .card.fade, .js .card .thumb img, .js .mask .m, .js .desc, .js .desc .c{
+      opacity:1 !important; transform:none !important; filter:none !important; transition:none !important;
+    }
+  }
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js');</script>
+
+<header>
+  <div class="brand fade">Boulangerie Riche</div>
+  <div class="store fade">高の原店</div>
+  <div class="jp-sub fade">お す す め 商 品</div>
+</header>
+
+<section class="lead">
+  <h1 class="fade">素材と手仕事にこだわった、自慢の品々</h1>
+</section>
+
+<main>
+
+  <section class="category" id="pan-series">
+    <h2>食パンシリーズ</h2>
+    <div class="grid">
+
+      <div class="card fade" data-id="01">
+        <div class="thumb"><img src="豊潤食パン1斤.JPG" alt="豊潤食パン"></div>
+        <div class="card-body">
+          <h3>豊潤食パン</h3>
+          <div class="price"><span>1斤 ¥350</span><span>1本 ¥700</span></div>
+          <p class="desc">創業以来こだわりを追求し続けてきた<strong>看板商品</strong>「豊潤食パン」。<strong>湯種製法</strong>で仕込んだ生地は、ひとくち目から<strong>もちもち、しっとり</strong>。噛むほどに<strong>小麦本来のやさしい甘み</strong>が口いっぱいに広がります。<strong>グループ不動の人気</strong>を誇る、自慢の看板食パンです。</p>
+        </div>
+      </div>
+
+      <div class="card fade" data-id="02">
+        <div class="thumb"><img src="贅沢食パン1斤.JPG" alt="贅沢食パン"></div>
+        <div class="card-body">
+          <h3>贅沢食パン</h3>
+          <div class="price"><span>1斤 ¥350</span><span>1本 ¥700</span></div>
+          <p class="desc">厳選した<strong>国産小麦を100%使用</strong>し、練乳・砂糖・油脂を贅沢に配合した「贅沢食パン」。<strong>ふんわりしっとり</strong>の生地が口の中でやさしくほどけ、<strong>濃厚なコクとリッチな甘み</strong>が広がります。<strong>まずは何もつけずに、そのまま生食パンとして</strong>お楽しみください。</p>
+        </div>
+      </div>
+
+      <div class="card fade" data-id="03">
+        <div class="thumb"><span class="badge limited">高の原店限定</span><img src="パン%20ド%20ミ1斤.JPG" alt="パン・ド・ミ"></div>
+        <div class="card-body">
+          <h3>パン・ド・ミ</h3>
+          <div class="price"><span>1斤 ¥350</span><span>1本 ¥700</span></div>
+          <p class="desc"><strong>国産小麦100%</strong>の生地に香ばしい全粒粉をブレンドし、海のミネラルたっぷりの天日塩で味を引き締めた「パン・ド・ミ」。<strong>低温でじっくり長時間発酵</strong>させ、小麦の旨みを引き出しました。<strong>薄くパリッと香ばしい外側と、もっちりしっとりの中身</strong>の食感の違いが一番の魅力です。<strong>トーストすれば、小麦のコクと豊かな香りが一気に立ちのぼります。</strong>シンプルだからこそ味わえる本格派。<strong>高の原店限定、シェフおすすめ</strong>の食パンです。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="category" id="chef-recommend">
+    <h2>シェフのおすすめ商品</h2>
+    <div class="grid">
+
+      <div class="card fade" data-id="04">
+        <div class="thumb"><span class="badge">人気 No.1</span><img src="塩パン.JPG" alt="塩パン"></div>
+        <div class="card-body">
+          <h3>塩パン</h3>
+          <div class="price"><span>¥180</span></div>
+          <p class="desc">噛むほどに味わい深い国産小麦のハード生地で有塩バターを包み、専用の鉄板で焼き上げました。<strong>底はまるで揚げ焼きのようにカリッカリ。</strong>かじると<strong>バターがじゅわっと広がり</strong>、フランス産ゲランドの塩がその旨みとコクを引き立てます。食感と味わいにこだわり抜いた、<strong>堂々の当店人気No.1</strong>です！</p>
+        </div>
+      </div>
+
+      <div class="card fade" data-id="05">
+        <div class="thumb"><span class="badge">人気 No.2</span><img src="パン・オ・レザン.JPG" alt="パン・オ・レザン"></div>
+        <div class="card-body">
+          <h3>パン・オ・レザン<br>&lt;ぶどうたっぷり&gt;</h3>
+          <div class="price"><span>¥370</span></div>
+          <p class="desc">じっくり仕込んだ湯種生地に、さらに水分を抱き込ませるパンナージュ【?】製法で、<strong>みずみずしく超もちもち</strong>の食感に仕上げました。主役の<strong>有機レーズン</strong>には、ほんのりラム酒をきかせています。噛むほどに<strong>華やかな香りとジューシーな甘み</strong>が広がります。素材と製法を極めた、<strong>ワンランク上のぶどうパン</strong>。<strong>当店人気No.2</strong>です。</p>
+        </div>
+      </div>
+
+      <div class="card fade" data-id="06">
+        <div class="thumb"><img src="発酵バターのクロワッサン.JPG" alt="発酵バターのクロワッサン"></div>
+        <div class="card-body">
+          <h3>発酵バターのクロワッサン</h3>
+          <div class="price"><span>¥290</span></div>
+          <p class="desc">厳選した<strong>発酵バターを12層に折り込んだ</strong>生地を、まず低温でじっくり発酵させます。次に高温で一気に水分を飛ばし、最後に低温で芯までしっかり焼き込むことで、<strong>パリッと軽やかな食感と香ばしさ</strong>に仕上げました。ひと口かじれば、<strong>芳醇なバターの香りが口いっぱいに</strong>広がります。</p>
+        </div>
+      </div>
+
+      <div class="card fade" data-id="07">
+        <div class="thumb"><span class="badge limited">高の原店限定</span><img src="香ばし胚芽のクロワッサン.JPG" alt="香ばし胚芽のクロワッサン"></div>
+        <div class="card-body">
+          <h3>香ばし胚芽のクロワッサン</h3>
+          <div class="price"><span>¥290</span></div>
+          <p class="desc"><strong>― 香ばしさ際立つ、ぜいたくな一品 ―</strong><br>芳醇な<strong>発酵バター</strong>と、独特のコクをもつ<strong>胚芽</strong>を使いました。<strong>4つ折りと3つ折りを重ねた層</strong>が、サクッと弾ける食感と、胚芽ならではの<strong>極上の香ばしさ</strong>を生み出します。<strong>高の原店のオリジナル商品</strong>です。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="category" id="more">
+    <h2>その他のおすすめ商品</h2>
+    <div class="grid">
+
+      <div class="card fade" data-id="08">
+        <div class="thumb"><img src="3種のナッツとベーコン.JPG" alt="3種のナッツとベーコン"></div>
+        <div class="card-body">
+          <h3>3種のナッツとベーコン</h3>
+          <div class="price"><span>¥310</span></div>
+          <p class="desc"><strong>アーモンド・カシューナッツ・くるみ</strong>を練り込んだハード生地は、<strong>しっかりとした噛みごたえ</strong>が魅力。噛むほどに<strong>ナッツの香ばしさとジューシーなベーコンの旨み</strong>が広がり、仕上げの<strong>はちみつと黒胡椒</strong>が甘じょっぱいアクセントになって、もう一口食べたくなります。<strong>リッシュグループを代表するアイテム</strong>です。</p>
+        </div>
+      </div>
+
+      <div class="card fade" data-id="09">
+        <div class="thumb"><img src="メロンパン.JPG" alt="メロンパン"></div>
+        <div class="card-body">
+          <h3>メロンパン</h3>
+          <div class="price"><span>¥200</span></div>
+          <p class="desc"><strong>アーモンドプードル</strong>を配合し、グラニュー糖と強力粉を使うことで、<strong>ザックリとした歯ごたえ</strong>に仕上げたこだわりのビスケット生地。<strong>国産小麦</strong>で仕込んだパン生地は、<strong>もっちりしっとりで口どけなめらか</strong>。この食感のコントラストが人気の秘密です。</p>
+        </div>
+      </div>
+
+      <div class="card fade" data-id="10">
+        <div class="thumb"><img src="バケット.JPG" alt="バケット"></div>
+        <div class="card-body">
+          <h3>バケット</h3>
+          <div class="price"><span>¥320</span></div>
+          <p class="desc"><strong>フランス産小麦の豊かな香り</strong>と、<strong>ゲランドの塩のまろやかな塩気</strong>が魅力のバゲットです。<strong>低温でじっくり発酵</strong>させることで、噛むほどに<strong>小麦本来の甘みと旨み</strong>があふれ出します。<strong>外はパリッと、中はもっちり。</strong>シェフこだわりのバゲットです。</p>
+        </div>
+      </div>
+
+      <div class="card fade" data-id="11">
+        <div class="thumb"><img src="バイツェンミッシュブロート.JPG" alt="バイツェンミッシュブロート"></div>
+        <div class="card-body">
+          <h3>バイツェンミッシュブロート</h3>
+          <div class="price"><span>全形 ¥530</span><span>ハーフ ¥270</span></div>
+          <p class="desc"><strong>「シェフの自信作」</strong>バイツェンミッシュブロート。見た目は骨太なハード系。でもひと口食べれば<strong>「えっ、こんなにしっとり！？」</strong>と驚くはず。<strong>ライ麦全粒粉20%を湯種</strong>にすることで、旨みと<strong>圧倒的なもちもち感</strong>を引き出しました。加水率190%の生地で、しっとりとした食べ心地に仕上げています。さらに、<strong>低温でじっくり長時間発酵</strong>させ、小麦とライ麦の芳醇な旨みと香りを最大限に引き出しています。<strong>薄くスライスして、バターやチーズを添えたり、ワインのお供に</strong>したりするのがおすすめ。<strong>高の原店オリジナルレシピ</strong>のドイツパンです。</p>
+        </div>
+      </div>
+
+      <div class="card fade" data-id="12">
+        <div class="thumb"><img src="ノア・レザン.JPG" alt="ノア・レザン"></div>
+        <div class="card-body">
+          <h3>ノア・レザン</h3>
+          <div class="price"><span>全形 ¥800</span><span>ハーフ ¥410</span></div>
+          <p class="desc">当店の<strong>バイツェンミッシュブロート</strong>をベースに、<strong>香ばしいくるみ</strong>と、<strong>ほんのりラム酒をきかせたレーズン</strong>を贅沢に練り込みました。噛むたびに芳醇な香りが広がり、ライ麦生地ならではの<strong>もっちり・しっとり感</strong>と、穀物本来の自然な旨みが一体になります。<strong>クリームチーズやブルーチーズとの相性</strong>もよく、<strong>赤ワインのお供</strong>にもおすすめです。</p>
+        </div>
+      </div>
+
+      <div class="card fade" data-id="13">
+        <div class="thumb"><img src="香ばし胚芽のリュスティック.JPG" alt="香ばし胚芽のリュスティック"></div>
+        <div class="card-body">
+          <h3>香ばし胚芽のリュスティック</h3>
+          <div class="price"><span>全形 ¥480</span><span>ハーフ ¥250</span></div>
+          <p class="desc"><strong>胚芽ならではの香ばしさ</strong>と、<strong>餅小麦が生み出す桁違いのもちもち感</strong>が魅力のリュスティック。生地の中の<strong>大きな気泡</strong>に、じっくり育てた旨みと香りがぎゅっと詰まっています。<strong>軽くトーストするだけでもおいしく、オリーブオイルと塩をかければ至福のひととき</strong>に。<strong>高の原店限定</strong>の商品を、ぜひお試しください。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>Boulangerie Riche</footer>
+
+
+<script>
+// ▼ 商品の文字・値段は Google スプレッドシートから読み込みます。
+//   「ウェブに公開」で出したCSVのURLを、下の '' の中に貼ってください。
+//   空のまま、または読み込みに失敗したときは、このページに書かれた内容がそのまま表示されます。
+var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSS7MrXyxOCXq9zcz0Ui6s4fbrNX81FwJcVPmwEmZ6EpN1MxMrv7eh_CWczwHWQG0HDBjDwzQ3L9201/pub?output=csv';
+
+function loadSheet(done){
+  if(!SHEET_CSV_URL){ done(); return; }
+  var finished = false;
+  function finish(){ if(!finished){ finished = true; done(); } }
+  setTimeout(finish, 4000);
+  fetch(SHEET_CSV_URL, {cache:'no-cache'}).then(function(r){
+    if(!r.ok) throw new Error(r.status);
+    return r.text();
+  }).then(function(text){
+    try{ applySheet(parseCSV(text)); }catch(e){ console.warn('シートの反映に失敗', e); }
+    finish();
+  }).catch(function(e){ console.warn('シートの読み込みに失敗', e); finish(); });
+}
+
+function parseCSV(t){
+  var rows = [], row = [], cur = '', q = false;
+  t = t.replace(/^﻿/, '');
+  for(var i = 0; i < t.length; i++){
+    var c = t[i];
+    if(q){
+      if(c === '"'){ if(t[i+1] === '"'){ cur += '"'; i++; } else q = false; }
+      else cur += c;
+    } else if(c === '"') q = true;
+    else if(c === ','){ row.push(cur); cur = ''; }
+    else if(c === '\n' || c === '\r'){
+      if(c === '\r' && t[i+1] === '\n') i++;
+      row.push(cur); rows.push(row); row = []; cur = '';
+    } else cur += c;
+  }
+  if(cur !== '' || row.length){ row.push(cur); rows.push(row); }
+  return rows;
+}
+
+// 文字を安全な形にして、改行は <br>、**囲み** は太字にする
+function toHtml(s){
+  s = s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return s.replace(/\r?\n/g,'<br>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+}
+
+function applySheet(rows){
+  if(!rows.length || rows[0][0].indexOf('ID') !== 0) return;   // 商品表ではないデータは無視
+  rows.slice(1).forEach(function(r){
+    // スプレッドシートが「01」を「1」に直すことがあるので、数字にそろえて探す
+    var no = parseInt((r[0] || '').trim(), 10);
+    if(isNaN(no)) return;
+    var card = document.querySelector('.card[data-id="' + ('0' + no).slice(-2) + '"]');
+    if(!card) return;
+    var name = (r[1] || '').trim(), p1 = (r[2] || '').trim(), p2 = (r[3] || '').trim(), desc = (r[4] || '').trim();
+    if(name) card.querySelector('h3').innerHTML = toHtml(name);
+    if(p1){
+      var price = card.querySelector('.price');
+      price.innerHTML = '<span>' + toHtml(p1) + '</span>' + (p2 ? '<span>' + toHtml(p2) + '</span>' : '');
+    }
+    if(desc) card.querySelector('.desc').innerHTML = toHtml(desc);
+  });
+}
+
+function init(){
+  function wrap(el){ el.classList.add('mask'); el.innerHTML='<span class="m">'+el.innerHTML+'</span>'; }
+
+  // 説明文を1文字ずつの部品に分け、何行目かを調べて、行ごとに時間差をつける
+  function buildLines(p){
+    var html = p.getAttribute('data-html');
+    if(!html){ html = p.innerHTML; p.setAttribute('data-html', html); }
+    p.classList.remove('lined');
+    p.innerHTML = html;
+    var walker = document.createTreeWalker(p, NodeFilter.SHOW_TEXT), nodes = [], n;
+    while((n = walker.nextNode())) nodes.push(n);
+    nodes.forEach(function(node){
+      var frag = document.createDocumentFragment();
+      [].forEach.call(node.nodeValue, function(ch){
+        var sp = document.createElement('span');
+        sp.className = 'c'; sp.textContent = ch; frag.appendChild(sp);
+      });
+      node.parentNode.replaceChild(frag, node);
+    });
+    var cs = [].slice.call(p.querySelectorAll('.c')), line = 0, prev = null;
+    var lh = parseFloat(getComputedStyle(p).lineHeight) || 20;
+    cs.forEach(function(c){
+      var top = c.getBoundingClientRect().top;
+      if(prev !== null && top > prev + lh*0.5) line++;
+      prev = top;
+      c.style.setProperty('--i', line);
+    });
+    p.classList.add('lined');
+  }
+
+  var descs = document.querySelectorAll('.card .desc');
+  document.querySelectorAll('.card h3,.card .price').forEach(wrap);
+
+  var solo = document.querySelectorAll('header .brand,header .store,header .jp-sub,.lead h1,.category h2');
+  solo.forEach(function(el){ wrap(el); el.classList.add('fade','solo'); });
+
+  var els = document.querySelectorAll('.card.fade,.solo');
+  els.forEach(function(el){
+    var idx = [].indexOf.call(el.parentElement.children, el);
+    el.style.setProperty('--d', (el.classList.contains('solo') ? idx*0.1 : (idx%3)*0.2) + 's');
+  });
+
+  function lines(){ descs.forEach(buildLines); }
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(lines);
+  var lastW = window.innerWidth, t;
+  window.addEventListener('resize', function(){
+    if(window.innerWidth === lastW) return;
+    lastW = window.innerWidth; clearTimeout(t); t = setTimeout(lines, 200);
+  });
+
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){ e.classList.add('visible'); }); return; }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ e.target.classList.toggle('visible', e.isIntersecting); });
+  }, { threshold:0.15 });
+  els.forEach(function(el){ io.observe(el); });
+}
+loadSheet(init);
+</script>
+</body>
+</html>
